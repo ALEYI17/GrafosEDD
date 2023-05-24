@@ -427,25 +427,25 @@ public:
     }
 
     std::pair<std::vector<U>, std::vector<std::vector<int>>> dijkstra(T origen) {
-        int inicioIndex = buscarVertice(origen);
+        int inicioIndex = buscarVertice(origen); // Obtener el índice del vértice de origen
 
         if (inicioIndex == -1) {
             std::cout << "El vértice de origen no existe." << std::endl;
             return std::make_pair(std::vector<U>(), std::vector<std::vector<int>>());
         }
 
-        std::vector<U> distancias(vertices.size(), std::numeric_limits<U>::max()); // Initialize distances to infinity
-        std::vector<bool> visitado(vertices.size(), false); // Track visited vertices
-        std::vector<std::vector<int>> rutas(vertices.size()); // Track shortest paths
+        std::vector<U> distancias(vertices.size(), std::numeric_limits<U>::max()); // Inicializar distancias a infinito
+        std::vector<bool> visitado(vertices.size(), false); // Rastrear vértices visitados
+        std::vector<std::vector<int>> rutas(vertices.size()); // Rastrear rutas más cortas
 
-        distancias[inicioIndex] = 0; // Distance from the source vertex to itself is 0
-        rutas[inicioIndex].push_back(inicioIndex); // The path to the source vertex only contains itself
+        distancias[inicioIndex] = 0; // La distancia desde el vértice fuente hasta sí mismo es 0
+        rutas[inicioIndex].push_back(inicioIndex); // El camino al vértice fuente solo contiene a sí mismo
 
         for (int i = 0; i < vertices.size() - 1; i++) {
             int minDistIndex = -1;
             U minDist = std::numeric_limits<U>::max();
 
-            // Find the vertex with the minimum distance
+            // Encontrar el vértice con la distancia mínima
             for (int j = 0; j < vertices.size(); j++) {
                 if (!visitado[j] && distancias[j] < minDist) {
                     minDist = distancias[j];
@@ -453,10 +453,10 @@ public:
                 }
             }
 
-            // Mark the selected vertex as visited
+            // Marcar el vértice seleccionado como visitado
             visitado[minDistIndex] = true;
 
-            // Update the distances and paths of the adjacent vertices
+            // Actualizar las distancias y rutas de los vértices adyacentes
             for (int j = 0; j < vertices.size(); j++) {
                 if (!visitado[j] && aristas[minDistIndex][j] != 0) {
                     U newDist = distancias[minDistIndex] + aristas[minDistIndex][j];
@@ -469,7 +469,7 @@ public:
             }
         }
 
-        return std::make_pair(distancias, rutas);
+        return std::make_pair(distancias, rutas); // Devolver las distancias y rutas más cortas
     }
 
     std::vector<std::vector<U>> floydWarshall() {
